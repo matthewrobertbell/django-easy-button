@@ -1,4 +1,4 @@
-** django's easy button **
+**django's easy button**
 
 Writing django is great, but coming from Rails roots, a few things have always
 felt missing.
@@ -33,4 +33,4 @@ felt missing.
         
 - ``easy.views``: documentation coming soon, if you're feeling dangerous you can check out the source code.
 
-** that was easy **
+**that was easy**
