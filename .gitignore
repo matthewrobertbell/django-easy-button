@@ -1,0 +1,5 @@
+*.pyc
+dev.*
+*.swp
+templates/adminica-base.html
+pip-log.txt

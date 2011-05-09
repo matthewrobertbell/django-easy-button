@@ -1,0 +1,59 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load uni_form_tags %}
+
+{% block body_class %}object_list{% endblock %}
+
+{% block extra_head %}
+<script>
+  var object_type = '{{type|lower}}';
+  var {{type|lower}}_object_list = l_o_l = [ {% for r in objects.object_list.reverse %}
+{{r.to_json|safe}}, {% endfor %} ]
+  object_list = {}
+  object_list.{{type|lower}} = l_o_l;
+  console.debug(object_list)
+</script>
+{% endblock %}
+
+{% block subnav %}
+  <ul>
+    {% if add_link %}
+      <li>
+      <a class="ajax new_{{type}}" href="{{add_link}}">
+          {% if not add_link_text %}
+            Create {{type|lower}}
+          {% else %}
+            {{add_link_text}}
+          {% endif %}
+      </a>
+      </li>
+    {% endif %}
+    <li>
+    <a class="list_{{type}}s" href="{{list_link}}">
+      {% if not list_link_text %}
+        List {{type|lower}}s
+      {% else %}
+        {{list_link_text}}
+      {% endif %}
+    </li>
+  </ul>
+{% endblock %}
+
+{% block body %}
+
+<h2>
+{% if not header %}
+{{type}}s
+{% else %}
+{{ header }}
+{% endif %}
+</h2>
+
+{% if subheader %}
+<small>{{subheader}}</small>
+{% endif %}
+
+<div class="{{type|lower}} object_list">
+</div>
+{% endblock %}

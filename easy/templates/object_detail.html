@@ -1,0 +1,18 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load ifsetting_tag %}
+{% load uni_form_tags %}
+
+{% block body_class %}object_detail {{obj.class_name|lower}}{% endblock %}
+
+{% block body %}
+{% if parent_link %}
+  <a href="{{parent_link}}">
+    <img src="/static/pinax/img/silk/icons/control-rewind.png" />
+    <b>Back to {{ parent_name|default:"list" }}</b>
+  </a>
+{% endif %}
+<h2>{{obj.class_name}}: {{obj}}</h2>
+
+{% endblock %}
