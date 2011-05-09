@@ -19,7 +19,7 @@ felt missing.
     Address.first()
 
     # Shortcuts for common lookups
-    # f = filter, e = exclude, g = get_or_none, g404 = get_or_404
+    # a = all, f = filter, e = exclude, g = get_or_none, g404 = get_or_404
     user_address = Address.g(pk='', user=req.user) or Address(user=req.user)
 
     # Chaining still works
@@ -36,7 +36,32 @@ felt missing.
     # Now you can do, e.g. ->
     LogMessage.errors().count() 
         
-- ``easy.views``: documentation coming soon, if you're feeling dangerous you can check out the source code.
+- ``easy.views`` -- making rapidly developing front-ends suck less
+  by drastically cutting the required code for common tasks
+  :: 
+    # Lists of objects owned by a user
+    # ("Event" must be a user_owned_model, or relation must be specified)
+    def my_events(req):
+        return user_object_list(req, Event.a(), 
+            relation='user_id',
+            template='events/object_list.html'})
+
+    # Or get a single object for the user
+    # Throws a 404 if not found
+    def event_info(req, id):
+        a = 5
+        return user_object_detail(req, Event.f(pk=id),
+                relation='user_id',
+                template='events/info.html',
+                extra_context={'a_value': a})
+
+    # A "new-or-edit" form
+    # Called with an id, this form is for editing
+    # Called without an id, the form is for creating
+    def event_form(req, id=False):
+        return user_form_page(req, Event, EventForm, 
+                instance=Event.find(id),
+                redirect_to='/events/{id}')
 - mongodb support: ``easy.models.mongo`` has basic support for adding the
   ``easy_queries_mixin`` to mongodb-engine models, if you're using it.
 
