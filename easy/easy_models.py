@@ -1,4 +1,4 @@
-from contrib.random_hashes import *
+from easy.random_hashes import *
 from django.core import serializers
 from django.db import models
 from django.db.models.query import QuerySet
