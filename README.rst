@@ -1,0 +1,36 @@
+** django's easy button **
+
+Writing django is great, but coming from Rails roots, a few things have always
+felt missing.
+
+- Extended models with ``easy.models.easy_model``. ``easy_model`` has several derivatives, such as ``strong_id_model`` (primary key is a random varchar(40)), ``weak_id_model`` (same, but with varchar(8)), and ``user_owned_model`` (a ``strong_id_model`` with a foreign key to the users table)
+  ::
+    class Address(easy.models.user_owned_model):
+      country = models.CharField(max_length=128)
+- Quick and easy model lookup shorthand
+  ::
+    # Shortcut methods work with-or-without ".object"
+    # .first(), .last(), .random() are obvious --
+    Address.first()
+
+    # Shortcuts for common lookups
+    # f = filter, e = exclude, g = get_or_none, g404 = get_or_404
+    user_address = Address.g(pk='', user=req.user) or Address(user=req.user)
+
+    # Chaining still works
+    Address.f(user=req.user).e(country='US').first()
+    
+- "Scoping" -- really just dynamic lookup aliasing (still in development).
+  ::
+    class LogMessage(easy.models.strong_id_model):
+      level = models.CharField(max_length=128)
+      def __init__(self,*args,**kwargs):
+        super(LogMessage,self).__init__(*args,**kwargs)
+        self.scope('errors', lambda qs: qs.f(level='error'))
+
+    # Now you can do, e.g. ->
+    LogMessage.errors().count() 
+        
+- ``easy.views``: documentation coming soon, if you're feeling dangerous you can check out the source code.
+
+** that was easy **
