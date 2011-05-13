@@ -3,6 +3,7 @@ from django.http import Http404
 from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 from django import forms
+from django.http import HttpResponse
 
 def form_page(req, model_class, form_class, 
         redirect_to=False, id=None, instance=None, template=None, **kwargs):
@@ -48,11 +49,19 @@ def user_object_detail(req, qs, relation='user__id',
     return object_detail(req, qs.f(**{relation: req.user.id}),
             *args, **kwargs)
 def object_detail(req, qs, template='object_detail.html',
-        extra_context=None):
+        as_json=False, extra_context=None):
     if not qs.count(): raise Http404()
     obj = qs[0] 
     data = {'object': obj, 'obj': obj, 'id': obj.id}
     if extra_context: data = dict(data, **extra_context)
+    if as_json:
+        as_json = str(as_json)
+        if not hasattr(obj, as_json): 
+            as_json = 'to_json'
+        if callable(getattr(obj, as_json)):
+            try: json = getattr(obj, as_json)()
+            except: json= '{}'
+        return HttpResponse(json)
     return render_to_response(template, data,
             context_instance=RequestContext(req))
 
@@ -61,7 +70,8 @@ def user_object_list(req, queryset, relation='user__id', *args, **kwargs):
     return object_list(req, user_qs, *args, **kwargs)
 
 def object_list(req, queryset, per_page=25, template='object_list.html',
-        allow_empty=True, allow_override_per_page=True, extra_context=None):
+        allow_empty=True, allow_override_per_page=True, extra_context=None,
+        as_json=False):
     if not allow_empty and queryset.count() == 0:
         raise Http404
     try: page = int(req.GET.get('page', '1'))
@@ -82,6 +92,17 @@ def object_list(req, queryset, per_page=25, template='object_list.html',
                 **extra_context)
     else:
         data = dict(data, extra_context={})
+    if as_json:
+        as_json = str(as_json)
+        json_results = []
+        for obj in objects.object_list:
+            if not hasattr(obj, as_json): 
+                as_json = 'to_json'
+            if callable(getattr(obj, as_json)):
+                try: json_results.append(getattr(obj, as_json)())
+                except: pass
+        from json import dumps, loads
+        return HttpResponse(dumps(map(loads,json_results)))
 
     objects.modelname = ''
     return render_to_response(template, data,
