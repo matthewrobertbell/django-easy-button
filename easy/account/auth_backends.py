@@ -10,7 +10,8 @@ class AuthenticationBackend(ModelBackend):
     @property
     def user_class(self):
         if not hasattr(self, '_user_class'):
-            self._user_class = models.get_model(*settings.CUSTOM_USER_MODEL.split('.', 2))
+            self._user_class = models.get_model(*getattr(settings,
+                CUSTOM_USER_MODEL, 'easy.auth.models.User'))
             if not self._user_class:
                 raise ImproperlyConfigured('Could not get custom user model')
         return self._user_class
