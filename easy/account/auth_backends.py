@@ -21,7 +21,7 @@ class AuthenticationBackend(ModelBackend):
 
     def authenticate(self, **credentials):
         lookup_params = {}
-        if settings.ACCOUNT_EMAIL_AUTHENTICATION:
+        if getattr(settings, 'ACCOUNT_EMAIL_AUTHENTICATION', False):
             name, identity = "email", credentials.get("email")
         else:
             name, identity = "username", credentials.get("username")
