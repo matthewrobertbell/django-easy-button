@@ -57,6 +57,19 @@ class easy_model_manager(models.Manager, easy_shortcuts_mixin):
 
 class easy_model(models.Model):
     objects = easy_model_manager()
+    UNIQUE_MAX_TRIES = 15 # Should be enough to get a random until the space fills up
+    class UnableToGenerateIDException(Exception):
+        pass
+    def make_unique(self, prop, generator):
+        tries = 0
+        while not hasattr(self, prop):
+            tries += 1 
+            new_val = generator()
+            if not self.__class__.g(prop=new_val):
+                setattr(self, prop, new_val)
+                return new_val
+            if tries > self.UNIQUE_MAX_TRIES:
+                raise self.UnableToGenerateUniquePropertyException()
     class Meta:
         abstract = True
     @classmethod
@@ -90,19 +103,47 @@ class easy_model(models.Model):
         return self._meta.object_name
 
 
-class weak_id_model(easy_model):
-    id = models.CharField(max_length=40, primary_key=True,
-            default=randHash8, blank=True)
+class random_id_model(easy_model):
+    id = models.CharField(max_length=128, primary_key=True, blank=True)
     class Meta:
         abstract = True
 
-class strong_id_model(easy_model):
-    id = models.CharField(max_length=40, primary_key=True,
-            default=randHash40, blank=True)
+    def random_id(self):
+        return 'RANDOM NOT IMPLEMENTED'
+    def save(self, *args, **kwargs):
+        self.make_unique('id', self.random_id)
+        return super(random_name_model, self).save(*args, **kwargs)
+
+class weak_id_model(random_id_model):
+    @classmethod
+    def random_id(self):
+        return randHash8()
     class Meta:
         abstract = True
 
-class user_owned_model(weak_id_model):
+class strong_id_model(random_id_model):
+    @classmethod
+    def random_id(self):
+        return randHash40()
+    class Meta:
+        abstract = True
+
+class silly_named_model(easy_model):
+    MAX_LENGTH = 60 # Currently a "soft limit", actual values may exceed this
+    class Meta:
+        abstract = True
+
+    @classmethod
+    def random_name(self):
+        from easy.random_names import RANDOM_NAMES
+        import random
+        return '-'.join(random.sample(RANDOM_NAMES, 4)).lower().replace(' ','-')
+    def save(self, *args, **kwargs):
+        self.make_unique('id', self.random_id)
+        return super(named_model, self).save(*args, **kwargs)
+
+
+class user_owned_model(strong_id_model):
     user = models.ForeignKey(User)
     class Meta:
         abstract = True
