@@ -1,6 +1,7 @@
 from django.conf import settings
 
 from django.db import models
+from django.core.exceptions import ImproperlyConfigured
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
 
