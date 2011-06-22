@@ -22,12 +22,12 @@ association_model = models.get_model("django_openid", "Association")
 if association_model is not None:
     from django_openid.models import UserOpenidAssociation
 
-from pinax.apps.account.utils import get_default_redirect, user_display
-from pinax.apps.account.models import OtherServiceInfo
-from pinax.apps.account.forms import AddEmailForm, ChangeLanguageForm, ChangePasswordForm
-from pinax.apps.account.forms import ChangeTimezoneForm, LoginForm, ResetPasswordKeyForm
-from pinax.apps.account.forms import ResetPasswordForm, SetPasswordForm, SignupForm
-from pinax.apps.account.forms import TwitterForm
+from .utils import get_default_redirect, user_display
+from .models import OtherServiceInfo
+from .forms import AddEmailForm, ChangeLanguageForm, ChangePasswordForm
+from .forms import ChangeTimezoneForm, LoginForm, ResetPasswordKeyForm
+from .forms import ResetPasswordForm, SetPasswordForm, SignupForm
+from .forms import TwitterForm
 
 
 
