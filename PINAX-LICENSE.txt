@@ -1,4 +1,4 @@
-The code in folders easy/accounts, easy/waitinglist, and easy/signup_codes were 
+The code in folders accounts/, waitinglist/, signup_codes/, and templatetags/ were 
 originally directly copied from Pinax. Some modifications have been made over
 time. We thank Pinax for providing an excellent solution, and allowing us to
 strip it down for our needs.
