@@ -19,6 +19,8 @@ class EasyUserManager(easy_model_manager, UserManager):
     pass
 class EasyUser(easy_model, User):
     objects = EasyUserManager()
+    class Meta:
+        proxy = True
 
 class Account(strong_id_model):
     user = models.ForeignKey(User, unique=True, verbose_name=_("user"))
