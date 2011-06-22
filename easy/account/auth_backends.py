@@ -3,15 +3,14 @@ from django.conf import settings
 from django.db import models
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.auth.backends import ModelBackend
-from django.contrib.auth.models import User
 
+from .models import EasyUser
 
 class AuthenticationBackend(ModelBackend):
     @property
     def user_class(self):
         if not hasattr(self, '_user_class'):
-            self._user_class = models.get_model(*getattr(settings,
-                'CUSTOM_USER_MODEL', 'easy.auth.models.User'))
+            self._user_class = EasyUser
             if not self._user_class:
                 raise ImproperlyConfigured('Could not get custom user model')
         return self._user_class

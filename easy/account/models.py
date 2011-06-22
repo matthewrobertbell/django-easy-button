@@ -12,7 +12,13 @@ from django.contrib.auth.models import User, AnonymousUser
 from emailconfirmation.models import EmailAddress, EmailConfirmation
 from emailconfirmation.signals import email_confirmed
 from timezones.fields import TimeZoneField
-from easy.models import easy_model, strong_id_model
+from easy.models import easy_model, strong_id_model, easy_model_manager
+from django.contrib.auth.models import User, UserManager
+
+class EasyUserManager(easy_model_manager, UserManager):
+    pass
+class EasyUser(easy_model, User):
+    objects = EasyUserManager()
 
 class Account(strong_id_model):
     user = models.ForeignKey(User, unique=True, verbose_name=_("user"))
