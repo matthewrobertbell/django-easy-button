@@ -8,7 +8,7 @@ from django.test import TestCase
 
 from django.contrib.auth.models import User
 
-import pinax
+import easy
 
 from emailconfirmation.models import EmailAddress, EmailConfirmation
 
@@ -16,7 +16,7 @@ from emailconfirmation.models import EmailAddress, EmailConfirmation
 class PasswordResetTest(TestCase):
     # tests based on django.contrib.auth tests
     
-    urls = "pinax.apps.account.tests.account_urls"
+    urls = "easy.account.tests.account_urls"
     
     def setUp(self):
         self.old_installed_apps = settings.INSTALLED_APPS
