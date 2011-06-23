@@ -42,7 +42,6 @@ def group_context(group, bridge):
 
 
 def signup(request, **kwargs):
-    
     form_class = kwargs.pop("form_class", SignupForm)
     template_name = kwargs.pop("template_name", "account/signup.html")
     template_name_failure = kwargs.pop("template_name_failure", "signup_codes/failure.html")
@@ -61,7 +60,7 @@ def signup(request, **kwargs):
                 fallback_url = settings.LOGIN_REDIRECT_URL
         success_url = get_default_redirect(request, fallback_url)
     
-    code = request.GET.get("code")
+    code = request.GET.get("code", False)
     
     if request.method == "POST":
         form = form_class(request.POST, group=group)
@@ -78,7 +77,7 @@ def signup(request, **kwargs):
                 }
             )
             return HttpResponseRedirect(success_url)
-    else:
+    elif code:
         signup_code = check_signup_code(code)
         if signup_code:
             initial = {
