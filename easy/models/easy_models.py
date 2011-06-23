@@ -112,7 +112,7 @@ class random_id_model(easy_model):
         return 'RANDOM NOT IMPLEMENTED'
     def save(self, *args, **kwargs):
         self.make_unique('id', self.random_id)
-        return super(random_name_model, self).save(*args, **kwargs)
+        return super(random_id_model, self).save(*args, **kwargs)
 
 class weak_id_model(random_id_model):
     @classmethod
