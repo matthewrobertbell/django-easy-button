@@ -77,7 +77,7 @@ def signup(request, **kwargs):
                 }
             )
             return HttpResponseRedirect(success_url)
-    elif code:
+    else:
         signup_code = check_signup_code(code)
         if signup_code:
             initial = {
