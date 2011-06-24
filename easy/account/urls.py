@@ -7,7 +7,10 @@ from .forms import SignupForm
 if settings.ACCOUNT_OPEN_SIGNUP:
     signup_view = "easy.account.views.signup"
 else:
-    signup_view = "easy.signup_codes.views.signup"
+    if getattr(settings, 'OPEN_WAITING_LIST', False):
+        signup_view = "easy.waitinglist.views.list_signup"
+    else:
+        signup_view = "easy.signup_codes.views.signup"
 
 
 urlpatterns = patterns("",
