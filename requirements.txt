@@ -1,20 +1,27 @@
-Mercurial
--e git+https://github.com/pydanny/django-uni-form.git#egg=django-uni-form
--e hg+https://bitbucket.org/wkornewald/django-mediagenerator#egg=django-mediagenerator
--e hg+https://bitbucket.org/offline/django-annoying
--e git+https://github.com/bfirsh/django-ordered-model.git#egg=django-ordered-model
-django-staticfiles
-django-debug-toolbar
-django-mailer
-django-email-confirmation
-django-timezones
-django-ajax-validation
-django-ses
-pytz
-django_extensions
-werkzeug
-south
-gunicorn
-ipython
-django-treebeard
-Markdown
+mercurial==1.8.4
+django-extensions==0.6
+django-annoying==0.7.6
+gunicorn==0.12.2
+django-treebeard==1.61
+django-ses==0.2
+Markdown==2.0.3
+ipython==0.10.2
+-e git+https://github.com/pydanny/django-uni-form.git@f9ed4bc5e25ee55dab37b21c2ddcb46b82ae9880#egg=django_uni_form-dev
+-e hg+https://bitbucket.org/wkornewald/django-mediagenerator@c7df08ef0949805c3b9ee30b273d21cb13d76faf#egg=django_mediagenerator-dev
+-e hg+http://bitbucket.org/wkornewald/django-nonrel@a00d2bc7258d85cf2041993d47f87e60bbc26100#egg=Django-dev
+-e git+https://github.com/bfirsh/django-ordered-model.git@de4c6104a07a1949c96f8a51357b4836549b13c5#egg=django_ordered_model-0.1
+BeautifulSoup==3.2.0
+Fabric==1.0a.-2173f85-
+PyYAML==3.10
+South==0.7.3
+Werkzeug==0.6.2
+distribute==0.6.16
+django-ajax-validation==0.1.3
+django-debug-toolbar==0.8.5
+django-email-confirmation==0.1.4
+django-mailer==0.1.0
+django-staticfiles==1.0.1
+django-timezones==0.1.4
+pytz==2011g
+virtualenv==1.6.1
+wsgiref==0.1.2
