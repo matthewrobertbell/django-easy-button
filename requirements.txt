@@ -1,0 +1,20 @@
+Mercurial
+-e git+https://github.com/pydanny/django-uni-form.git#egg=django-uni-form
+-e hg+https://bitbucket.org/wkornewald/django-mediagenerator#egg=django-mediagenerator
+-e hg+https://bitbucket.org/offline/django-annoying
+-e git+https://github.com/bfirsh/django-ordered-model.git#egg=django-ordered-model
+django-staticfiles
+django-debug-toolbar
+django-mailer
+django-email-confirmation
+django-timezones
+django-ajax-validation
+django-ses
+pytz
+django_extensions
+werkzeug
+south
+gunicorn
+ipython
+django-treebeard
+Markdown
