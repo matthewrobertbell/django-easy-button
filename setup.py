@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+import re
 def parse_requirements(file_name):
     requirements = []
     for line in open(file_name, 'r').read().split('\n'):
