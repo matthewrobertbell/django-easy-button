@@ -11,7 +11,6 @@ ipython==0.10.2
 -e hg+http://bitbucket.org/wkornewald/django-nonrel@a00d2bc7258d85cf2041993d47f87e60bbc26100#egg=Django-dev
 -e git+https://github.com/bfirsh/django-ordered-model.git@de4c6104a07a1949c96f8a51357b4836549b13c5#egg=django_ordered_model-0.1
 BeautifulSoup==3.2.0
-Fabric==1.0a.-2173f85-
 PyYAML==3.10
 South==0.7.3
 Werkzeug==0.6.2
