@@ -60,9 +60,9 @@ class easy_model(models.Model):
     UNIQUE_MAX_TRIES = 15 # Should be enough to get a random until the space fills up
     class UnableToGenerateIDException(Exception):
         pass
-    def make_unique(self, prop, generator):
+    def make_unique(self, prop, generator, min_len=4):
         tries = 0
-        while not getattr(self, prop, False):
+        while not len(getattr(self, prop, '')) > min_len:
             tries += 1 
             new_val = generator()
             if not self.__class__.g(prop=new_val):
