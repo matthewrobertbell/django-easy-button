@@ -64,6 +64,8 @@ class easy_model_manager(models.Manager, easy_shortcuts_mixin):
         return qs
 
 class easy_model(models.Model):
+    added = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     objects = easy_model_manager()
     UNIQUE_MAX_TRIES = 15 # Should be enough to get a random until the space fills up
     class UnableToGenerateIDException(Exception):
