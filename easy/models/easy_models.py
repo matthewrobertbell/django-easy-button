@@ -34,6 +34,14 @@ class easy_shortcuts_mixin:
             if n == 1: return qs.reverse()[0]
             return qs.reverse()[0:n]
         except: return None
+    def random(self, n=1):
+        try:
+            if n == 1:
+                return self.order_by('?')[0]
+            else:
+                return self.order_by('?')[:n]
+        except:
+            return None
     def to_json(self):
         json_serializer = serializers.get_serializer("json")()
         return json_serializer.serialize(self.a(),
